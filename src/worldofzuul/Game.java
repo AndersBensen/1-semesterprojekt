@@ -14,17 +14,19 @@ public class Game {
     }
 
     private void createRooms() {
-        Room outside, theatre, pub, lab, office;
+        Room outside, theatre, pub, lab, office, test1fredagsbar;
 
         outside = new Room("outside the main entrance of the university");
         theatre = new Room("in a lecture theatre");
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
+        test1fredagsbar = new Room("in the fredagsbar");
 
         outside.setExit("east", theatre);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
+        outside.setExit("fredagsbar", test1fredagsbar);
 
         theatre.setExit("west", outside);
 
@@ -34,6 +36,8 @@ public class Game {
         lab.setExit("east", office);
 
         office.setExit("west", lab);
+        
+        test1fredagsbar.setExit("west", lab);
 
         currentRoom = outside;
     }
@@ -72,6 +76,8 @@ public class Game {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
+        } else if (commandWord == CommandWord.DRINK) {
+            System.out.println("noice");
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
