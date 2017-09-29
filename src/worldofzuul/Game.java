@@ -7,6 +7,8 @@ package worldofzuul;
 public class Game {
     private Parser parser;
     private Room currentRoom;
+    
+    int drinkcounter = 0; 
 
     public Game() {
         createRooms();
@@ -26,7 +28,7 @@ public class Game {
         outside.setExit("east", theatre);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
-        outside.setExit("fredagsbar", test1fredagsbar);
+        outside.setExit("southeast", test1fredagsbar);
 
         theatre.setExit("west", outside);
 
@@ -37,7 +39,7 @@ public class Game {
 
         office.setExit("west", lab);
         
-        test1fredagsbar.setExit("west", lab);
+        test1fredagsbar.setExit("south", lab);
 
         currentRoom = outside;
     }
@@ -77,11 +79,15 @@ public class Game {
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
         } else if (commandWord == CommandWord.DRINK) {
-            System.out.println("noice");
+            drinkcounter += 1;
+            System.out.println("Youve had: " + drinkcounter + " beers.");
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
-
+        if (drinkcounter >= 7) {
+            System.out.println("Youve had too many beers, game lost.");
+            return true;   
+        }
         return wantToQuit;
     }
 
