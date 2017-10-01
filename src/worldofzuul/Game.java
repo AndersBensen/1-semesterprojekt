@@ -9,6 +9,7 @@ public class Game {
     private Room currentRoom;
     
     int drinkcounter = 0; 
+    int beercounter = 7;
 
     public Game() {
         createRooms();
@@ -38,8 +39,10 @@ public class Game {
         lab.setExit("east", office);
 
         office.setExit("west", lab);
+        office.setExit("southeast", test1fredagsbar);
         
         test1fredagsbar.setExit("south", lab);
+        test1fredagsbar.setExit("north", outside);
 
         currentRoom = outside;
     }
@@ -78,15 +81,25 @@ public class Game {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
+            beercounter += 1; 
+            System.out.println("Youve found 1 beer.");
         } else if (commandWord == CommandWord.DRINK) {
             drinkcounter += 1;
+            beercounter -= 1; 
             System.out.println("Youve had: " + drinkcounter + " beers.");
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
+        } else if (commandWord == CommandWord.INVENTORY) {
+            System.out.println("You have: " + beercounter + " beers in your inventory");
         }
-        if (drinkcounter >= 7) {
-            System.out.println("Youve had too many beers, game lost.");
+        
+        if (beercounter == 0) {
+            System.out.println("You are out of beers, game lost.");
             return true;   
+        }
+        else if (drinkcounter == 15) {
+            System.out.println("Youve had too many beers, game lost.");
+            return true; 
         }
         return wantToQuit;
     }
